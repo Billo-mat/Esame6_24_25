@@ -1,0 +1,10 @@
+
+# 2. Aggiungiamo la colonna per il rapporto tra larghezza petalo e larghezza sepalo
+# Assumiamo i nomi standard delle colonne (petal_width, sepal_width)
+df['petal_sepal_width_ratio'] = df['petal width'] / df['sepal width']
+
+# 3. Aggiungiamo la colonna per il rapporto tra lunghezza petalo e lunghezza sepalo
+df['petal_sepal_length_ratio'] = df['petal length'] / df['sepal length']
+
+# Visualizziamo il risultato
+print(df.head())
