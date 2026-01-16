@@ -1,0 +1,47 @@
+
+# 1. Setup della griglia (51x51, coordinate da 0 a 50)
+grid_size = 51
+steps = 50
+num_walks = 5
+
+# Il centro della griglia (punto di partenza)
+start_pos = grid_size // 2  # 51 // 2 = 25
+
+# 2. Creazione del grafico della griglia di sfondo
+x_grid, y_grid = np.meshgrid(np.arange(grid_size), np.arange(grid_size))
+plt.scatter(x_grid, y_grid, color='lightgray', s=1, alpha=0.5)
+
+# 3. Simulazione dei 5 Random Walks
+for i in range(num_walks):
+    # Ogni cammino parte dal centro [25, 25]
+    x, y = [start_pos], [start_pos]
+    
+    current_x, current_y = start_pos, start_pos
+    
+    for _ in range(steps):
+        # Definiamo i possibili passi: -1, 0, o 1 per ogni direzione
+        # Escludendo il passo (0,0) per muoversi sempre
+        dx, dy = 0, 0
+        while dx == 0 and dy == 0:
+            dx = np.random.choice([-1, 0, 1])
+            dy = np.random.choice([-1, 0, 1])
+        
+        # Aggiornamento posizione con logica "wrap-around" (operatore modulo %)
+        current_x = (current_x + dx) % grid_size
+        current_y = (current_y + dy) % grid_size
+        
+        x.append(current_x)
+        y.append(current_y)
+    
+    # Plot del cammino
+    plt.plot(x, y, marker='o', markersize=3, label=f'Walk {i+1}')
+ticks = np.arange(0, 51, 10) 
+
+plt.xticks(ticks)
+plt.yticks(ticks)
+
+# Opzionale: per vedere meglio i tick, assicurati che gli assi siano visibili
+plt.axis('on') 
+plt.title(f"{num_walks} Random Walks (50 steps)")
+plt.axis('equal')
+plt.show()
