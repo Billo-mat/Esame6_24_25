@@ -1,0 +1,17 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Creazione delle coordinate per una griglia 51x51
+x = np.linspace(0, 50, 51)
+y = np.linspace(0, 50, 51)
+X, Y = np.meshgrid(x, y)
+
+# Rappresentazione dei punti della griglia
+plt.scatter(X, Y, color='black', s=1)  # s=1 imposta la dimensione dei punti
+
+# Assicura che la griglia sia quadrata e rimuove gli assi per pulizia
+plt.axis('equal')
+plt.axis('off')
+
+# Salvataggio dell'immagine
+plt.show()
