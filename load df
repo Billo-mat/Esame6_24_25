@@ -1,0 +1,8 @@
+import pandas as pd
+
+# Caricamento del file iris.csv in un DataFrame
+# Assicurati che il file si trovi nella stessa cartella del tuo script
+df = pd.read_csv('iris.csv')
+
+# Visualizzazione delle prime righe per conferma
+print(df.head())
