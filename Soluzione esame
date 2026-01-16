@@ -171,7 +171,7 @@ plt.show()
 
 # 1. Preparazione dei dati: prendiamo solo la sepal_width delle Iris-setosa
 # Assicurati che il nome della colonna e della specie corrispondano al tuo CSV
-setosa_data = df[df['species'] == 'Iris-setosa']['sepal_width'].values
+setosa_data = df[df['class'] == 'Iris-setosa']['sepal width'].values
 
 # 2. Definizione del Modello Statistico con PyMC
 with pm.Model() as model:
