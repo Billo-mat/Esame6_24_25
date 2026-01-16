@@ -1,0 +1,43 @@
+from typing import List, Tuple
+
+def merge_walks(walk1: List[Tuple[int, int]], walk2: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
+    """
+    Computes a new walk alternating steps from two paths.
+    
+    >>> merge_walks([(0,0), (1,1), (1,2), (1,3)], [(1,0), (0,1)])
+    [(0, 0), (1, 1), (0, 2), (0, 3), (0, 4)]
+    """
+    
+    # Questa funzione è ora "figlia" di merge_walks
+    def get_steps(walk):
+        steps = []
+        for i in range(1, len(walk)):
+            dx = walk[i][0] - walk[i-1][0]
+            dy = walk[i][1] - walk[i-1][1]
+            steps.append((dx, dy))
+        return steps
+
+    # Tutto questo blocco deve essere indentato per stare dentro merge_walks
+    steps1 = get_steps(walk1)
+    steps2 = get_steps(walk2)
+    
+    combined_steps = []
+    max_len = max(len(steps1), len(steps2))
+    
+    for i in range(max_len):
+        if i < len(steps1):
+            combined_steps.append(steps1[i])
+        if i < len(steps2):
+            combined_steps.append(steps2[i])
+            
+    res = [(0, 0)]
+    for dx, dy in combined_steps:
+        last_x, last_y = res[-1]
+        res.append((last_x + dx, last_y + dy))
+        
+    return res
+
+if __name__ == "__main__":
+    import doctest
+    # verbose=True ti permette di vedere i test anche se passano con successo
+    doctest.testmod()
