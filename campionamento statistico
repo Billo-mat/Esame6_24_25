@@ -1,0 +1,31 @@
+# 1. Preparazione dei dati: prendiamo solo la sepal_width delle Iris-setosa
+# Assicurati che il nome della colonna e della specie corrispondano al tuo CSV
+setosa_data = df[df['species'] == 'Iris-setosa']['sepal_width'].values
+
+# 2. Definizione del Modello Statistico con PyMC
+with pm.Model() as model:
+    # Prior: le nostre stime iniziali (λ=1 significa scala=1/1=1)
+    # Usiamo l'esponenziale per mu (media) e sigma (dev. std) come richiesto
+    mu = pm.Exponential('mu', lam=1.0)
+    sigma = pm.Exponential('sigma', lam=1.0)
+    
+    # Likelihood: come pensiamo siano distribuiti i dati osservati
+    # Il problema dice che la larghezza del sepalo è distribuita normalmente
+    observed = pm.Normal('observed', mu=mu, sigma=sigma, observed=setosa_data)
+    
+    # 3. Campionamento (Inference)
+    # draw=1000 genera mille campioni della distribuzione posterior
+    trace = pm.sample(1000, return_inferencedata=True)
+
+# 4. Plot dei risultati
+az.plot_trace(trace)
+plt.tight_layout()
+plt.show()
+
+# 5. Stampa dei valori richiesti (confronto con i dati reali)
+print(f"Media campionaria (osservata): {np.mean(setosa_data):.3f}")
+print(f"Deviazione standard (osservata): {np.std(setosa_data):.3f}")
+
+# Puoi anche stampare il riassunto della posterior calcolata da PyMC
+print("\nRiassunto della Posterior (PyMC):")
+print(az.summary(trace, round_to=3))
