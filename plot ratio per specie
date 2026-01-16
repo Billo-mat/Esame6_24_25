@@ -1,0 +1,31 @@
+
+# 1. Creazione della figura con due subplot (1 riga, 2 colonne)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+
+# Lista delle classi (specie) uniche nel dataset
+species = df['class'].unique()
+colors = ['blue', 'orange', 'green']
+
+# 2. Plot dell'istogramma di SINISTRA (Width Ratios)
+for s, col in zip(species, colors):
+    subset = df[df['class'] == s]
+    ax1.hist(subset['petal_sepal_width_ratio'], bins=15, alpha=0.5, label=s, color=col)
+
+ax1.set_title('Petal/Sepal Width Ratio')
+ax1.set_xlabel('Ratio')
+ax1.set_ylabel('Frequency')
+ax1.legend()
+
+# 3. Plot dell'istogramma di DESTRA (Length Ratios)
+for s, col in zip(species, colors):
+    subset = df[df['class'] == s]
+    ax2.hist(subset['petal_sepal_length_ratio'], bins=15, alpha=0.5, label=s, color=col)
+
+ax2.set_title('Petal/Sepal Length Ratio')
+ax2.set_xlabel('Ratio')
+ax2.set_ylabel('Frequency')
+ax2.legend()
+
+# Ottimizzazione degli spazi tra i grafici
+plt.tight_layout()
+plt.show()
